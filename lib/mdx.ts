@@ -7,7 +7,7 @@ import { mdxComponents } from '@/components/mdx-components'
 
 import { SLUG_TO_PATH } from './slug-to-path-mdx'
 
-const CONTENT_PATH = path.join(process.cwd(), 'content')
+const CONTENT_PATH = path.join(process.cwd(), 'app', 'content')
 
 export async function getDocContent(slug: string) {
   const relativePath = SLUG_TO_PATH[slug]
