@@ -13,7 +13,7 @@ export type LinkCategory = {
 
 export const sidebarLinks: LinkCategory[] = [
   {
-    title: 'Fundamentals',
+    title: 'fundamentals',
     links: [
       {
         href: APP_ROUTES.intro,
