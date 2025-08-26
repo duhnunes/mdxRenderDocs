@@ -8,9 +8,12 @@
     <strong>Renderizador de arquivos MDX</strong>
   </p>
 
-  [![release](https://img.shields.io/github/package-json/v/duhnunes/mdxRenderDoc)](https://github.com/duhnunes/mdxRenderDoc/releases)
   ![license](https://img.shields.io/badge/license-MIT-green?style=flat)
 </div>
+
+## Demo
+
+[mdxRenderDocs](https://mdxrenderdocs.vercel.app/intro)
 
 ## About
 **mdxRenderDocs** é um projeto básico de estudo sobre criação de documentação com renderizador de arquivos `.mdx`
