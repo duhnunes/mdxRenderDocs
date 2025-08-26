@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
   ),
+  icons: {
+    icon: '/favicon.ico',
+  },
   title: 'mdxRenderDocs',
   description:
     'Uma ferramenta pra ajudar a criar documentações com MDX e NextJS de forma simples e rápida.',
