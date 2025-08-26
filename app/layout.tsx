@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   ),
   title: 'mdxRenderDocs',
   description:
-    'Uma ferramente pra ajudar a criar documentações com MDX e NextJS de forma simples e rápida.',
+    'Uma ferramenta pra ajudar a criar documentações com MDX e NextJS de forma simples e rápida.',
   authors: [{ name: 'DuH Nunes', url: 'https://github.com/duhnunes' }],
   keywords: [
     'duhnunes',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'mdxRenderDocs',
     description:
-      'Uma ferramente pra ajudar a criar documentações com MDX e NextJS de forma simples e rápida.',
+      'Uma ferramenta pra ajudar a criar documentações com MDX e NextJS de forma simples e rápida.',
     url: 'https://mdxrenderdocs.vercel.app',
     images: [
       {
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'mdxRenderDocs',
     description:
-      'Uma ferramente pra ajudar a criar documentações com MDX e NextJS de forma simples e rápida.',
+      'Uma ferramenta pra ajudar a criar documentações com MDX e NextJS de forma simples e rápida.',
     images: ['/icons/favicon-96x96.png'],
   },
 }
