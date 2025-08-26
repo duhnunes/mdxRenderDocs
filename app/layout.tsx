@@ -77,7 +77,7 @@ export default function RootLayout({
           type="image/png"
         />
         <link href="/icons/favicon.svg" rel="icon" type="image/svg+xml" />
-        <link href="/icons/favicon.ico" rel="shortcut icon" />
+        <link href="/favicon.ico" rel="shortcut icon" />
         <link
           href="/icons/apple-touch-icon.png"
           rel="apple-touch-icon"
