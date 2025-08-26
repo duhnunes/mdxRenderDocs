@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import Link from 'next/link'
 
 import { getDocContent } from '@/lib/mdx'
 import { Main } from '@/components/layouts/Main'
@@ -25,6 +26,13 @@ export default async function DocPage({
 
   const currentLink = currentCategory?.links.find((link) => link.href === slug)
 
+  const flatLinks = sidebarLinks.flatMap((category) => category.links)
+  const currentIndex = flatLinks.findIndex((link) => link.href === slug)
+
+  const prevLink = currentIndex > 0 ? flatLinks[currentIndex - 1] : null
+  const nextLink =
+    currentIndex < flatLinks.length - 1 ? flatLinks[currentIndex + 1] : null
+
   return (
     <section className="w-full h-full overflow-y-auto px-7 flex flex-col gap-5 justify-evenly">
       <div className="bg-background w-full h-12 fixed top-[52px] left-0 md:hidden" />
@@ -43,12 +51,25 @@ export default async function DocPage({
         <Main>{content}</Main>
       </div>
       <footer className="flex items-center justify-between">
-        <Button variant="ghost" size="sm">
-          Anterior
-        </Button>
-        <Button variant="ghost" size="sm">
-          Próxima
-        </Button>
+        {prevLink ? (
+          <Button variant="ghost" size="sm" asChild>
+            <Link href={prevLink.href}>{prevLink.label}</Link>
+          </Button>
+        ) : (
+          <Button variant="ghost" size="sm" disabled>
+            Anterior
+          </Button>
+        )}
+
+        {nextLink ? (
+          <Button variant="ghost" size="sm" asChild>
+            <Link href={nextLink.href}>{nextLink.label}</Link>
+          </Button>
+        ) : (
+          <Button variant="ghost" size="sm" disabled>
+            Próxima
+          </Button>
+        )}
       </footer>
     </section>
   )
