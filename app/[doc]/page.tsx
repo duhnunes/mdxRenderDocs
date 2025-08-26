@@ -28,7 +28,7 @@ export default async function DocPage({
 
   return (
     <ScrollArea className="flex flex-col w-full mx-auto md:mx-10 px-5">
-      <div className="bg-background w-full h-12 fixed top-12 left-0 md:hidden" />
+      <div className="bg-background w-full h-12 fixed top-[53px] left-0 md:hidden" />
       <div className="h-full w-full flex-1 mx-auto max-w-[860px] pt-5 my-10">
         <header className="mb-6">
           <span className="text-xs text-zinc-700 font-semibold uppercase block -mb-0.5">
