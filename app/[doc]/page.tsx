@@ -27,8 +27,9 @@ export default async function DocPage({
   const currentLink = currentCategory?.links.find((link) => link.href === slug)
 
   return (
-    <ScrollArea className="flex flex-col w-full mx-auto sm:mx-10">
-      <div className="h-full w-full flex-1 mx-auto max-w-[860px] my-10">
+    <ScrollArea className="flex flex-col w-full mx-auto md:mx-10 px-5">
+      <div className="bg-background w-full h-12 fixed top-12 left-0 md:hidden" />
+      <div className="h-full w-full flex-1 mx-auto max-w-[860px] pt-5 my-10">
         <header className="mb-6">
           <span className="text-xs text-zinc-700 font-semibold uppercase block -mb-0.5">
             {currentCategory?.title}

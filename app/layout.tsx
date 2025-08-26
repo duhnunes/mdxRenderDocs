@@ -4,8 +4,8 @@ import { Bebas_Neue, Space_Mono } from 'next/font/google'
 import './globals.css'
 
 import { Header } from '@/components/layouts/Header'
-import { Sidebar } from '@/components/layouts/Sidebar'
 import { ThemeProvider } from '@/components/theme-provider'
+import { Sidebar } from '@/components/layouts/Sidebar'
 
 const bebas = Bebas_Neue({
   variable: '--font-bebas',
@@ -101,7 +101,7 @@ export default function RootLayout({
         >
           <div className="flex flex-col h-screen">
             <Header />
-            <div className="flex flex-1 overflow-hidden">
+            <div className="flex flex-1 overflow-hidden relative">
               <Sidebar />
               {children}
             </div>
