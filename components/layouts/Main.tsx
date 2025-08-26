@@ -5,7 +5,5 @@ interface MainProps {
 }
 
 export const Main = ({ children }: MainProps) => {
-  return (
-    <main className="h-full w-full flex-1 max-w-[960px] pr-22">{children}</main>
-  )
+  return <main className="h-full w-full flex-1 max-w-[960px]">{children}</main>
 }
