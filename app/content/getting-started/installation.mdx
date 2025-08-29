@@ -9,29 +9,3 @@ code mdxRenderDoc
 pnpm install
 pnpm run dev
 ```
-
-<Separator className="my-8" />
-
-## Detalhes de Uso
-Por um pequeno equivoco na hora de criar o sistema de Sidebar automático, é necessário que todas as pastas dentro de `/content` tenham o mesmo nome de `title` do arquivo `data/sidebar-links.ts`, sim, é **caseSensitive**.
-
-## Componentes MDX personalizados
-<Separator className="mb-8" />
-
-Documentação DMX com mudança de tema e componentes React personalizados.
-
-```tsx
-import { BlockExample } from './ui/block-example'
-<BlockExemple title="BlockExemple">Esse é um BlockCode estilizado</BlockExample>
-```
-
-<BlockExample title="BlockExemple">Esse é um BlockCode estilizado</BlockExample>
-
-<Separator className="my-8" />
-
-```tsx
-import { Separator } from './ui/separator'
-<Separator className="my-8" />
-```
-<Separator className="my-8" />
-

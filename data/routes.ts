@@ -5,6 +5,7 @@ export const APP_ROUTES = {
 
   // Getting Started
   install: '/installation',
+  use: '/use',
 } as const
 
 export type AppRoute = keyof typeof APP_ROUTES

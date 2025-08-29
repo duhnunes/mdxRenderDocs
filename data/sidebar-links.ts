@@ -36,6 +36,11 @@ export const sidebarLinks: LinkCategory[] = [
         label: 'Instalação',
         description: 'Instalação e explicação rápida de uso.',
       },
+      {
+        href: APP_ROUTES.use,
+        label: 'Uso',
+        description: 'Criar novas páginas',
+      },
     ],
   },
 ]
