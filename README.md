@@ -42,6 +42,11 @@ Por um pequeno equivoco na criação do sistema de sidebar automático, é neces
 
 ---
 
+## Idea Feature
+- Automatizar o sistema de criação de páginas:
+  - Ao criar um arquivo dentro de `app/content`, gera um link automaticamente e a opção na sidebar.
+  - Ao criar uma pasta dentro de `app/content`, a pasta simboliza uma categoria, todos arquivos dentro dela, se tornarão páginas.
+
 ## Componentes MDX personalizados de exemplo
 
 BlockCode personalizado
