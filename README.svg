@@ -17,7 +17,7 @@
           display:flex;
           align-items:center;
           justify-content:center;
-          gap:1rem;
+          <!-- gap:1rem; -->
           border-bottom: 1px solid;
           border-color: oklch(0.552 0.016 285.938);
           text-transform: uppercase;
@@ -26,8 +26,9 @@
           font-size:3.5rem;
         }
         .header svg {
-          width:5rem;
-          height:5rem;
+          width:3.5rem;
+          height:3.5rem;
+          margin-top:2rem;
         }
 
         @media (prefers-color-scheme: light) {
