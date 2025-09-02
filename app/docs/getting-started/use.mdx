@@ -1,0 +1,48 @@
+---
+title: Modo de uso
+description: Modo de usar o mdxRenderDocs
+link_position: 2
+---
+
+Para começar, você só precisa criar uma pasta com um arquivo `.mdx` dentro de `app/docs`.  
+Automáticamente a rota/link/página será gerada na sidebar.  
+Você pode modificar a ordem dos links dentro da categoria e também a ordem da categoria, utilizando `frontmatters` no `.mdx` e usando `.json` na pasta.
+
+- Ordenando os links dentro da categoria:
+  No topo do arquivo, antes de tudo, você deve colocar o frontmatters:
+  ```markdown
+  ---
+  title: Título do link na sidebar
+  description: Descrição na página
+  link_position: 1 (número da posição desejada)
+  ---
+  ```
+- Ordenando as categorias:
+  Adicione um arquivo com nome `_category.json` dentro da pasta:
+  ```json
+    {
+      "title": "Titulo da categoria",
+      "sidebar_position": 1 (número da posição que você quer na ordem)
+    }
+  ```
+
+
+## Componentes MDX personalizados
+<Separator className="mb-8" />
+
+Documentação DMX com mudança de tema e componentes React personalizados.
+
+```tsx
+import { BlockExample } from './ui/block-example'
+<BlockExemple title="BlockExemple">Esse é um BlockCode estilizado</BlockExample>
+```
+
+<BlockExample title="BlockExemple">Esse é um BlockCode estilizado</BlockExample>
+
+<Separator className="my-8" />
+
+```tsx
+import { Separator } from './ui/separator'
+<Separator className="my-8" />
+```
+<Separator className="my-8" />

@@ -16,20 +16,29 @@
 [mdxRenderDocs](https://mdxrenderdocs.vercel.app/intro)
 
 ## About
-**mdxRenderDocs** é um projeto básico de estudo sobre criação de documentação com renderizador de arquivos `.mdx`
+**mdxRenderDocs** é um sistema leve e direto para criação de documentação técnica com arquivos `.mdx`. Focado na simplicidade e na entrega de conteúdo, ele transforma a estrutura de pastas e arquivos em uma experiência organizada e navegável - sem distrações.
 
-Esse projeto surgiu da curiosidade sobre como os sites conseguem renderizar um arquivo `.mdx`. A documentação é inspirada no **ui.shadcn**.
+O projeto nasceu como uma solução interna para documentar um outro projeto paralelo, mas evoluiu para algo maior: uma ferramenta que automatiza a renderização e roteamento de arquivos `.mdx` com React, oferecendo uma estrutura flexível e escalável para documentações técnicas.
+
+A mágica acontece dentro da pasta `app/docs/`:
+- Cada pasta representa uma categoria
+- Cada arquivo `.mdx` vira uma página
+- A sidebar é gerada automaticamente com ordenação e metadados definidos via frontmatter
+- A ordem e o título das categorias podem ser personalizados com um arquivo `_category.json`
+Com isso, basta escrever os arquivos e deixar que o sistema cuide do resto - entregando uma documentação funcional, elegante e fácil de manter.
 
 ## Features
 - Suporte a arquivos `.mdx` com componentes React
 - Estilização com TailwindCSS
 - Componentes acessíveis via shadcn/ui
-- Sidebar automático com categorias organizadas
+- Sidebar automática com categorias organizadas
 - Dark mode com `next-themes`
+- Ordenação de links e categorias via frontmatter e `_category.json`
 
-## Uso
+## Como usar
 
-Pra começar a usar o mdxRenderDocs:
+Clone o repositório e rode localmente:
+
 ```powershell
 gh repo clone duhnunes/mdxRenderDocs
 code mdxRenderDocs
@@ -38,28 +47,30 @@ pnpm run dev
 ```
 
 ### Criação de rotas
-> Um jeito muito simples de criar rotas e categorias  
-Uma pasta = uma categoria.  
-Um arquivo `.mdx` = uma rota.
 
-Cada pasta precisa ter um arquivo dentro pra criar uma nova categoria.  
-Cada arquivo `.mdx` tem um frontmetter que deve estar no topo dele:
+A estrutura de rotas é baseada na organização de arquivos dentro da pasta `app/docs`:
+
+- **Uma pasta** = uma categoria
+- **Um arquivo `.mdx`** = uma rota/página
+
+Cada arquivo `.mdx` deve conter um frontmatter no topo:
 
 ```md
 ---
 title: Titulo no sidebar
 description: Descrição da página que aparece no componente antes do conteúdo do arquivo
+link_position: 1 (número do posicionamento)
 ---
 ```
 
-Com essa configuração você é capaz de criar categorias e novas páginas com o nome personalizado, de uma forma muito mais simples e rápida.
-
----
-
-## Componentes MDX personalizados de exemplo
-
-BlockCode personalizado
-![BlockExample](./.github/imgs/blockcode.png)
+Para personalizar uma categoria, adicione um arquivo `_category.json` dentro da pasta:
+```json
+{
+  "title": "Nome da Categoria",
+  "sidebar_position": 2
+}
+```
+Com isso, você controla a ordem das categorias na sidebar e seus títulos de exibição.
 
 ---
 

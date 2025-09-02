@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 
 import { mdxComponents } from '@/components/mdx-components'
 
-const CONTENT_PATH = path.join(process.cwd(), 'app', 'content')
+const CONTENT_PATH = path.join(process.cwd(), 'app', 'docs')
 
 export async function getDocContent(slug: string) {
   const [category, filename] = slug.split('/')
