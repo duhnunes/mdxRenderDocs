@@ -6,6 +6,7 @@ import './globals.css'
 import { Header } from '@/components/layouts/Header'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Sidebar } from '@/components/layouts/Sidebar'
+import { getAllDocs } from '@/lib/docs'
 
 const bebas = Bebas_Neue({
   variable: '--font-bebas',
@@ -69,6 +70,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const categories = getAllDocs()
+
   return (
     <html suppressHydrationWarning lang="pt-BR">
       <head>
@@ -102,7 +105,7 @@ export default function RootLayout({
           <div className="flex flex-col h-screen">
             <Header />
             <div className="flex flex-1 overflow-hidden relative">
-              <Sidebar />
+              <Sidebar categories={categories} />
               {children}
             </div>
           </div>

@@ -5,11 +5,12 @@ import { useState } from 'react'
 import { SidebarOpen } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import type { DocCategory } from '@/lib/docs'
 
 import { DesktopSidebar } from './Desktop/desktop-side'
 import { MobileSidebar } from './Mobile/mobile-side'
 
-export const Sidebar = () => {
+export const Sidebar = ({ categories }: { categories: DocCategory[] }) => {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -23,11 +24,12 @@ export const Sidebar = () => {
 
       <aside className="h-screen w-auto md:w-40 lg:w-56 flex-shrink-0 transition-all">
         <div className="h-full hidden md:block">
-          <DesktopSidebar pathname={pathname} />
+          <DesktopSidebar pathname={pathname} categories={categories} />
         </div>
         <div className="w-full md:hidden block relative">
           <MobileSidebar
             pathname={pathname}
+            categories={categories}
             isOpen={isOpen}
             onClose={() => setIsOpen(false)}
           />
