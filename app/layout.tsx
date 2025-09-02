@@ -106,7 +106,9 @@ export default function RootLayout({
             <Header />
             <div className="flex flex-1 overflow-hidden relative">
               <Sidebar categories={categories} />
-              {children}
+              <div className="flex-1 h-full overflow-y-auto pt-12 md:pt-0">
+                {children}
+              </div>
             </div>
           </div>
         </ThemeProvider>

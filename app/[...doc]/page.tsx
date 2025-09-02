@@ -28,8 +28,7 @@ export default async function DocPage({
     currentIndex < flatLinks.length - 1 ? flatLinks[currentIndex + 1] : null
 
   return (
-    <section className="w-full h-full overflow-y-auto px-7 flex flex-col gap-5 justify-evenly">
-      <div className="bg-background w-full h-12 fixed top-[52px] left-0 md:hidden" />
+    <section className="w-full h-full overflow-y-auto px-7 flex flex-col gap-5 pb-8 md:py-8">
       <div className="w-full flex flex-col gap-5 md:mx-auto md:max-w-[860px] pt-14 md:pt-0">
         <header className="mb-6">
           <span className="text-xs text-zinc-700 font-semibold uppercase block -mb-0.5">
@@ -46,24 +45,33 @@ export default async function DocPage({
       </div>
       <footer className="flex items-center justify-between">
         {prevLink ? (
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="outline" size="sm" asChild>
             <Link href={prevLink.href}>{prevLink.label}</Link>
           </Button>
         ) : (
-          <Button variant="ghost" size="sm" disabled>
+          <Button variant="outline" size="sm" disabled>
             Anterior
           </Button>
         )}
 
         {nextLink ? (
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="outline" size="sm" asChild>
             <Link href={nextLink.href}>{nextLink.label}</Link>
           </Button>
         ) : (
-          <Button variant="ghost" size="sm" disabled>
+          <Button variant="outline" size="sm" disabled>
             Próxima
           </Button>
         )}
+      </footer>
+      <footer className="flex items-center justify-center w-full py-5">
+        <p className="text-sm text-muted-foreground">
+          &copy; {new Date().getFullYear()} <strong>mdxRenderDocs</strong>.
+          Desenvolvido por{' '}
+          <Button variant="link" size="link" asChild>
+            <Link href="https://github.com/duhnunes">DuHNunes</Link>
+          </Button>
+        </p>
       </footer>
     </section>
   )

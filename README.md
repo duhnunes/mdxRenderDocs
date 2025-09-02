@@ -38,8 +38,8 @@ pnpm run dev
 ```
 
 ### Criação de rotas
-> Um jeito muito simples de criar rotas e categorias
-Uma categoria = uma pasta  
+> Um jeito muito simples de criar rotas e categorias  
+Uma pasta = uma categoria.  
 Um arquivo `.mdx` = uma rota.
 
 Cada pasta precisa ter um arquivo dentro pra criar uma nova categoria.  
