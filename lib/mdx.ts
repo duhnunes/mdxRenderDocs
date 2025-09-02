@@ -1,21 +1,25 @@
 import fs from 'fs'
-import path from 'path'
+import path from 'node:path'
 
 import { compileMDX } from 'next-mdx-remote/rsc'
+import { notFound } from 'next/navigation'
 
 import { mdxComponents } from '@/components/mdx-components'
-
-import { SLUG_TO_PATH } from './slug-to-path-mdx'
 
 const CONTENT_PATH = path.join(process.cwd(), 'app', 'content')
 
 export async function getDocContent(slug: string) {
-  const relativePath = SLUG_TO_PATH[slug]
-  if (!relativePath) throw new Error(`Slug não mapeado: ${slug}`)
+  const [category, filename] = slug.split('/')
 
-  const filePath = path.join(CONTENT_PATH, `${relativePath}.mdx`)
+  if (!category || !filename) {
+    console.log(`Slug acessado: ${slug}`)
+    notFound()
+  }
+
+  const filePath = path.join(CONTENT_PATH, category, `${filename}.mdx`)
   if (!fs.existsSync(filePath)) {
-    throw new Error(`Arquivo MDX não encontrado: ${filePath}`)
+    console.log(`Arquivo MDX não encontrado: ${filePath}`)
+    notFound()
   }
 
   const source = fs.readFileSync(filePath, 'utf8')

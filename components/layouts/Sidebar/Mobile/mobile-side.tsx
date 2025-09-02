@@ -4,14 +4,16 @@ import { motion, AnimatePresence } from 'motion/react'
 
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { sidebarLinks } from '@/data/sidebar-links'
+import type { DocCategory } from '@/lib/docs'
 
 export function MobileSidebar({
   pathname,
+  categories,
   isOpen,
   onClose,
 }: {
   pathname: string
+  categories: DocCategory[]
   isOpen: boolean
   onClose: () => void
 }) {
@@ -32,7 +34,7 @@ export function MobileSidebar({
               </Button>
             </div>
 
-            {sidebarLinks.map((category, index) => (
+            {categories.map((category, index) => (
               <div
                 key={category.title}
                 className="flex flex-col gap-0.5 mb-3 mt-4"
@@ -56,7 +58,7 @@ export function MobileSidebar({
                   </Button>
                 ))}
 
-                {index < sidebarLinks.length - 1 && (
+                {index < categories.length - 1 && (
                   <Separator className="my-4" />
                 )}
               </div>

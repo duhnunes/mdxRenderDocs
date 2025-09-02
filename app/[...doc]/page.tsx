@@ -1,33 +1,27 @@
-import { notFound } from 'next/navigation'
 import Link from 'next/link'
 
 import { getDocContent } from '@/lib/mdx'
 import { Main } from '@/components/layouts/Main'
-import { isValidRoute } from '@/lib/is-valid-route'
-import { sidebarLinks } from '@/data/sidebar-links'
 import { Button } from '@/components/ui/button'
+import { getAllDocs } from '@/lib/docs'
 
 export default async function DocPage({
   params,
 }: {
-  params: Promise<{ doc: string }>
+  params: Promise<{ doc: string[] }>
 }) {
   const { doc } = await params
-  const slug = `/${doc}`
-  const { content } = await getDocContent(doc)
+  const slug = `/${doc.join('/')}`
+  const { content } = await getDocContent(doc.join('/'))
 
-  if (!isValidRoute(slug)) {
-    notFound()
-  }
+  const sidebarLinks = getAllDocs()
+  const flatLinks = sidebarLinks.flatMap((category) => category.links)
+  const currentIndex = flatLinks.findIndex((link) => link.href === slug)
 
+  const currentLink = flatLinks[currentIndex]
   const currentCategory = sidebarLinks.find((category) =>
     category.links.some((link) => link.href === slug)
   )
-
-  const currentLink = currentCategory?.links.find((link) => link.href === slug)
-
-  const flatLinks = sidebarLinks.flatMap((category) => category.links)
-  const currentIndex = flatLinks.findIndex((link) => link.href === slug)
 
   const prevLink = currentIndex > 0 ? flatLinks[currentIndex - 1] : null
   const nextLink =

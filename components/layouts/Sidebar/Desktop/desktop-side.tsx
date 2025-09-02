@@ -3,12 +3,18 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
-import { sidebarLinks } from '@/data/sidebar-links'
+import { type DocCategory } from '@/lib/docs'
 
-export function DesktopSidebar({ pathname }: { pathname: string }) {
+export function DesktopSidebar({
+  pathname,
+  categories,
+}: {
+  pathname: string
+  categories: DocCategory[]
+}) {
   return (
     <ScrollArea className="w-full h-full p-4 pt-0 border-r border-border relative">
-      {sidebarLinks.map((category, index) => (
+      {categories.map((category, index) => (
         <div key={category.title} className="flex flex-col gap-0.5 mb-3 mt-4">
           <p className="text-xs text-ring font-semibold uppercase mb-1">
             {category.title}
@@ -28,7 +34,7 @@ export function DesktopSidebar({ pathname }: { pathname: string }) {
             </Button>
           ))}
 
-          {index < sidebarLinks.length - 1 && <Separator className="my-4" />}
+          {index < categories.length - 1 && <Separator className="my-4" />}
         </div>
       ))}
     </ScrollArea>
