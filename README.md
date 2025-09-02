@@ -36,9 +36,23 @@ code mdxRenderDocs
 pnpm install
 pnpm run dev
 ```
-### Detalhe de uso
 
-Por um pequeno equivoco na criação do sistema de sidebar automático, é necessário manter as pastas dentro de `/content` com os mesmos nomes de `title` do arqivo `data/sidebar-links.ts`, sim, é `caseSensitive`.
+### Criação de rotas
+> Um jeito muito simples de criar rotas e categorias
+Uma categoria = uma pasta  
+Um arquivo `.mdx` = uma rota.
+
+Cada pasta precisa ter um arquivo dentro pra criar uma nova categoria.  
+Cada arquivo `.mdx` tem um frontmetter que deve estar no topo dele:
+
+```md
+---
+title: Titulo no sidebar
+description: Descrição da página que aparece no componente antes do conteúdo do arquivo
+---
+```
+
+Com essa configuração você é capaz de criar categorias e novas páginas com o nome personalizado, de uma forma muito mais simples e rápida.
 
 ---
 
