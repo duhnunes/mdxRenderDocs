@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { Archive, Bird, PackageOpen, Spline } from 'lucide-react'
 
+import { versions } from '../../data/versions'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,23 +16,22 @@ import {
 } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
 
+const iconMap = {
+  bird: Bird,
+  packageOpen: PackageOpen,
+  archive: Archive,
+}
+
 export function DropdownVersion() {
   const [versionSelected, setVersionSelected] = useState<string | undefined>(
     undefined
   )
-  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
     const savedVersion = localStorage.getItem('mdxRenderDoc-selectedVersion')
     if (savedVersion) {
       setVersionSelected(savedVersion)
     }
-
-    const timeout = setTimeout(() => {
-      setIsMounted(true)
-    }, 500)
-
-    return () => clearTimeout(timeout)
   }, [])
 
   const handleSelectVersion = (version: string) => {
@@ -39,29 +39,32 @@ export function DropdownVersion() {
     localStorage.setItem('mdxRenderDoc-selectedVersion', version)
   }
 
-  const getVersionIcon = (version: string | undefined) => {
-    if (!version) return null
+  const getSelectedIconKey = (
+    version: string | undefined
+  ): keyof typeof iconMap | undefined => {
+    if (!version) return undefined
 
-    if (version === 'Canary') return <Bird className="size-4 text-primary" />
+    if (version === versions.canary.label)
+      return versions.canary.icon as keyof typeof iconMap
 
-    if (
-      version === 'Version 1.2.7' ||
-      version === 'Version 1.1.6' ||
-      version === 'Version 1.1.3'
-    )
-      return <PackageOpen className="size-4 text-primary" />
+    const allVersions = [...versions.active, ...versions.archived]
+    const found = allVersions.find((v) => v.label === version)
 
-    return <Archive className="size-4 text-primary" />
+    return found?.icon as keyof typeof iconMap
   }
+  const iconKey = getSelectedIconKey(versionSelected)
+  const IconComponent = iconKey ? iconMap[iconKey] : null
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {isMounted ? (
+        {versionSelected ? (
           <Button variant="outline" size="sm" className="w-[134px]">
             {versionSelected}
             <DropdownMenuShortcut>
-              {getVersionIcon(versionSelected)}
+              {IconComponent && (
+                <IconComponent className="size-4 text-primary" />
+              )}
             </DropdownMenuShortcut>
           </Button>
         ) : (
@@ -79,7 +82,7 @@ export function DropdownVersion() {
       <DropdownMenuContent className="w-56" align="center">
         <DropdownMenuGroup>
           <DropdownMenuItem
-            onClick={() => handleSelectVersion('Canary')}
+            onClick={() => handleSelectVersion(versions.canary.label)}
             aria-label="Version Canary"
           >
             Canary
@@ -90,69 +93,43 @@ export function DropdownVersion() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem
-            onClick={() => handleSelectVersion('Version 1.2.7')}
-            aria-label="Version 1.2.7"
-          >
-            Version 1.2.7
-            <DropdownMenuShortcut>
-              <PackageOpen className="size-4 text-primary" />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => handleSelectVersion('Version 1.1.6')}
-            aria-label="Version 1.1.6"
-          >
-            Version 1.1.6
-            <DropdownMenuShortcut>
-              <PackageOpen className="size-4 text-primary" />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => handleSelectVersion('Version 1.1.3')}
-            aria-label="Version 1.1.3"
-          >
-            Version 1.1.3
-            <DropdownMenuShortcut>
-              <PackageOpen className="size-4 text-primary" />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
+          {versions.active.map(({ label }) => {
+            return (
+              <DropdownMenuItem
+                key={label}
+                onClick={() => handleSelectVersion(label)}
+              >
+                {label}
+                <DropdownMenuShortcut>
+                  {IconComponent && (
+                    <IconComponent className="size-4 text-primary" />
+                  )}
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+            )
+          })}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuLabel className="text-center py-px">
             Archived
           </DropdownMenuLabel>
-          <DropdownMenuItem
-            className="text-primary/60"
-            onClick={() => handleSelectVersion('Version 1.1.1')}
-            aria-label="Version 1.1.1 archived"
-          >
-            Version 1.1.1
-            <DropdownMenuShortcut>
-              <Archive className="size-4 text-primary" />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="text-primary/60"
-            onClick={() => handleSelectVersion('Version 1.1.0')}
-            aria-label="Version 1.1.0 archived"
-          >
-            Version 1.1.0
-            <DropdownMenuShortcut>
-              <Archive className="size-4 text-primary" />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="text-primary/60"
-            onClick={() => handleSelectVersion('Version 1.0.0')}
-            aria-label="Version 1.0.0 archived"
-          >
-            Version 1.0.0
-            <DropdownMenuShortcut>
-              <Archive className="size-4 text-primary" />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
+          {versions.archived.map(({ label }) => {
+            return (
+              <DropdownMenuItem
+                key={label}
+                className="text-primary/60"
+                onClick={() => handleSelectVersion(label)}
+              >
+                {label}
+                <DropdownMenuShortcut>
+                  {IconComponent && (
+                    <IconComponent className="size-4 text-primary" />
+                  )}
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+            )
+          })}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
