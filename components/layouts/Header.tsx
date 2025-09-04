@@ -4,6 +4,7 @@ import { ModeToggle } from '../mode-toggle'
 import { Button } from '../ui/button'
 import { Logo } from '../ui/logo'
 import { Separator } from '../ui/separator'
+import { DropdownVersion } from '../Dropdown/versioning'
 
 export const Header = () => {
   return (
@@ -11,7 +12,10 @@ export const Header = () => {
       <Button size="icon" variant="ghost">
         <Logo className="size-5" />
       </Button>
-      <div className="flex items-center h-4">
+      <div className="flex items-center gap-x-2 h-4">
+        <DropdownVersion />
+        <ModeToggle />
+        <Separator orientation="vertical" />
         <Button asChild size="icon" title="GitHub" variant="ghost">
           <a
             className="cursor-default"
@@ -23,8 +27,6 @@ export const Header = () => {
             <span className="sr-only">GitHub</span>
           </a>
         </Button>
-        <Separator className="mx-2" orientation="vertical" />
-        <ModeToggle />
       </div>
     </header>
   )
