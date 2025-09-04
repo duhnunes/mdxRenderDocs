@@ -8,7 +8,8 @@
     <strong>Renderizador de arquivos MDX</strong>
   </p>
 
-  ![license](https://img.shields.io/badge/license-MIT-green?style=flat)
+![license](https://img.shields.io/badge/license-MIT-green?style=flat)
+
 </div>
 
 ## Demo
@@ -16,18 +17,21 @@
 [mdxRenderDocs](https://mdxrenderdocs.vercel.app/intro)
 
 ## About
+
 **mdxRenderDocs** é um pequeno sistema direto para criação de documentação com arquivos `.mdx`. Focado na simplicidade e na entrega de conteúdo, ele transforma a estrutura de pastas e arquivos em uma experiência organizada e navegável - sem distrações.
 
 O projeto nasceu como uma solução interna para documentar um outro projeto paralelo, mas evoluiu para algo maior: uma ferramenta que automatiza a renderização e roteamento de arquivos `.mdx` com React, oferecendo uma estrutura flexível e escalável para documentações técnicas.
 
 A mágica acontece dentro da pasta `app/docs/`:
+
 - Cada pasta representa uma categoria
 - Cada arquivo `.mdx` vira uma página
 - A sidebar é gerada automaticamente com ordenação e metadados definidos via frontmatter
 - A ordem e o título das categorias podem ser personalizados com um arquivo `_category.json`
-Com isso, basta escrever os arquivos e deixar que o sistema cuide do resto - entregando uma documentação funcional, elegante e fácil de manter.
+  Com isso, basta escrever os arquivos e deixar que o sistema cuide do resto - entregando uma documentação funcional, elegante e fácil de manter.
 
 ## Features
+
 - Suporte a arquivos `.mdx` com componentes React
 - Estilização com TailwindCSS
 - Componentes acessíveis via shadcn/ui
@@ -64,15 +68,18 @@ link_position: 1 (número do posicionamento)
 ```
 
 Para personalizar uma categoria, adicione um arquivo `_category.json` dentro da pasta:
+
 ```json
 {
-  "title": "Nome da Categoria",  // Nome da categoria na sidebar
-  "sidebar_position": 2         // Posição da categoria na sidebar
+  "title": "Nome da Categoria", // Nome da categoria na sidebar
+  "sidebar_position": 2 // Posição da categoria na sidebar
 }
 ```
+
 Com isso, você controla a ordem das categorias na sidebar e seus títulos de exibição.
 
 ---
 
 ## License
+
 Licensed under the [MIT](./LICENSE.md)
