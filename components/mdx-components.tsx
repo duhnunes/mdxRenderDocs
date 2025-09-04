@@ -1,4 +1,4 @@
-import { BlockExample } from './ui/block-example'
+import { BlockText } from './ui/block-text'
 import { Separator } from './ui/separator'
 
 export const mdxComponents: Record<string, React.ComponentType<any>> = {
@@ -10,24 +10,24 @@ export const mdxComponents: Record<string, React.ComponentType<any>> = {
   li: (props) => <li className="my-2 before:mr-2" {...props} />,
   blockquote: (props) => (
     <blockquote
-      className="text-zinc-400 dark:text-zinc-600 border-l-2 dark:border-muted bg-muted/60 dark:bg-muted/20 pl-4 flex items-center max-h-[38px] my-2"
+      className="bg-secondary text-muted-foreground border-l-2 pl-4 py-px my-2"
       {...props}
     />
   ),
   pre: (props) => (
     <pre
-      className="bg-zinc-900 text-zinc-100 rounded-md p-4 my-4 overflow-x-auto"
+      className="bg-secondary text-secondary-foreground rounded-md p-4 my-4 overflow-x-auto"
       {...props}
     />
   ),
   code: (props) => (
     <code
-      className="bg-zinc-200 text-zinc-800 rounded-xs px-1 py-0.5"
+      className="bg-secondary text-secondary-foreground rounded-sm px-1 py-0.5"
       {...props}
     />
   ),
 
   // Custom
   Separator: (props) => <Separator className="my-8" {...props} />,
-  BlockExample: (props) => <BlockExample {...props} />,
+  BlockText: (props) => <BlockText {...props} />,
 }

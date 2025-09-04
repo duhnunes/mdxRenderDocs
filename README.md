@@ -16,7 +16,7 @@
 [mdxRenderDocs](https://mdxrenderdocs.vercel.app/intro)
 
 ## About
-**mdxRenderDocs** é um sistema leve e direto para criação de documentação técnica com arquivos `.mdx`. Focado na simplicidade e na entrega de conteúdo, ele transforma a estrutura de pastas e arquivos em uma experiência organizada e navegável - sem distrações.
+**mdxRenderDocs** é um pequeno sistema direto para criação de documentação com arquivos `.mdx`. Focado na simplicidade e na entrega de conteúdo, ele transforma a estrutura de pastas e arquivos em uma experiência organizada e navegável - sem distrações.
 
 O projeto nasceu como uma solução interna para documentar um outro projeto paralelo, mas evoluiu para algo maior: uma ferramenta que automatiza a renderização e roteamento de arquivos `.mdx` com React, oferecendo uma estrutura flexível e escalável para documentações técnicas.
 
@@ -66,8 +66,8 @@ link_position: 1 (número do posicionamento)
 Para personalizar uma categoria, adicione um arquivo `_category.json` dentro da pasta:
 ```json
 {
-  "title": "Nome da Categoria",
-  "sidebar_position": 2
+  "title": "Nome da Categoria",  // Nome da categoria na sidebar
+  "sidebar_position": 2         // Posição da categoria na sidebar
 }
 ```
 Com isso, você controla a ordem das categorias na sidebar e seus títulos de exibição.

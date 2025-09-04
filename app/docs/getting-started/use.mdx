@@ -8,6 +8,8 @@ Para começar, você só precisa criar uma pasta com um arquivo `.mdx` dentro de
 Automáticamente a rota/link/página será gerada na sidebar.  
 Você pode modificar a ordem dos links dentro da categoria e também a ordem da categoria, utilizando `frontmatters` no `.mdx` e usando `.json` na pasta.
 
+Tá ligado?
+
 - Ordenando os links dentro da categoria:
   No topo do arquivo, antes de tudo, você deve colocar o frontmatters:
   ```markdown
@@ -30,11 +32,10 @@ Você pode modificar a ordem dos links dentro da categoria e também a ordem da 
 <Separator className="mb-8" />
 
 ```tsx
-import { BlockExample } from './ui/block-example'
-<BlockExemple title="BlockExemple">Esse é um BlockCode estilizado</BlockExample>
+<BlockText title="BlockText">Esse é um BlockCode estilizado</BlockText>
 ```
 
-<BlockExample title="BlockExemple">Esse é um BlockCode estilizado</BlockExample>
+<BlockText title="BlockText">Esse é um BlockCode estilizado</BlockText>
 
 <Separator className="my-8" />
 
@@ -45,3 +46,32 @@ import { Separator } from './ui/separator'
 <Separator className="my-2" />
 
 ---
+
+## Componentes MDX
+<Separator className="mb-8" />
+
+```tsx
+# H1
+## H2
+### H3
+> Blockquote
+- list
+`code`
+// ```    <- sem as barras
+bloco de código
+// ```    <- sem as barras
+
+```
+# H1
+## H2
+### H3
+> Blockquote
+Lista:
+- Item 1
+- Item 2
+- Item 3  
+`palavra destacada`
+```
+Bloco de código
+Com várias linhas
+```
