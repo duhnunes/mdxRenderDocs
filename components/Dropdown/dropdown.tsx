@@ -2,7 +2,9 @@
 
 import { useEffect, useState, type JSX } from 'react'
 import { Archive, Bird, PackageOpen, Spline } from 'lucide-react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+
+import { useVersion } from '@/hooks/use-version'
 
 import {
   DropdownMenu,
@@ -29,9 +31,7 @@ type VersionMeta = {
 }
 
 export function DropdownVersion() {
-  const [versionSelected, setVersionSelected] = useState<string | undefined>(
-    undefined
-  )
+  const { version, setVersion } = useVersion()
   const router = useRouter()
 
   const [versions, setVersions] = useState<{
@@ -41,14 +41,6 @@ export function DropdownVersion() {
   } | null>(null)
 
   useEffect(() => {
-    const saved = localStorage.getItem('mdxRenderDoc-selectedVersion')
-    const currentLabel = staticVersions[0]
-    if (saved) {
-      setVersionSelected(saved)
-    } else {
-      setVersionSelected(currentLabel)
-    }
-
     const inferIcon = (label: string): keyof typeof iconMap => {
       const version = label.replace('version-', '')
       return version < '1.1.2' ? 'archive' : 'packageOpen'
@@ -74,25 +66,27 @@ export function DropdownVersion() {
     })
   }, [])
 
-  function handleSelectVersion(version: string) {
+  function handleSelectVersion(label: string) {
+    const targetVersion =
+      label === 'canary' ? 'canary' : label.replace('version-', '')
     const pathname = window.location.pathname
     const match = pathname.match(/^\/docs\/([^\/]+)\/([^\/]+)$/)
+    const currentFilename = match?.[2] || 'intro'
 
-    const currentFilename = match?.[2] || 'intro' // fallback se não tiver
-    const targetVersion =
-      version === 'Canary' ? 'canary' : version.replace('version-', '')
-
-    const path = `/docs/${targetVersion}/${currentFilename}`
-
-    router.push(path)
-    setVersionSelected(version)
-    localStorage.setItem('mdxRenderDoc-selectedVersion', version)
+    setVersion(targetVersion)
+    router.push(`/docs/${targetVersion}/${currentFilename}`)
   }
 
   const getIcon = (label: string | undefined): JSX.Element | null => {
     if (!versions || !label) return null
     const all = [versions.canary, ...versions.active, ...versions.archived]
-    const found = all.find((v) => v.label === label)
+
+    const found = all.find((v) => {
+      const normalized =
+        v.label === 'canary' ? 'canary' : v.label.replace('version-', '')
+      return normalized === label
+    })
+
     const Icon = found ? iconMap[found.icon] : null
     return Icon ? <Icon className="size-4 text-primary" /> : null
   }
@@ -114,14 +108,18 @@ export function DropdownVersion() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="w-[134px] capitalize">
-          {versionSelected?.replace('version-', 'version ')}
-          <DropdownMenuShortcut>
-            {getIcon(versionSelected)}
-          </DropdownMenuShortcut>
+        <Button
+          variant="outline"
+          size="sm"
+          className="min-w-[134px] capitalize"
+        >
+          {version === 'canary'
+            ? 'Canary'
+            : `Version ${version?.replace('version-', '')}`}
+          <DropdownMenuShortcut>{getIcon(version)}</DropdownMenuShortcut>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="center">
+      <DropdownMenuContent className="w-56" align="start">
         <DropdownMenuGroup>
           <DropdownMenuItem
             onClick={() => handleSelectVersion(versions.canary.label)}

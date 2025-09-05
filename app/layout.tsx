@@ -5,6 +5,7 @@ import './globals.css'
 
 import { Header } from '@/components/layouts/Header'
 import { ThemeProvider } from '@/components/theme-provider'
+import { VersionProvider } from '@/context/version-docs'
 
 const bebas = Bebas_Neue({
   variable: '--font-bebas',
@@ -92,17 +93,19 @@ export default async function RootLayout({
         <meta name="theme-color" content="#0a0a0a" />
       </head>
       <body className={`${bebas.variable} ${spaceMono.variable} antialiased`}>
-        <ThemeProvider
-          disableTransitionOnChange
-          enableSystem
-          attribute="class"
-          defaultTheme="dark"
-        >
-          <div className="flex flex-col h-screen">
-            <Header />
-            {children}
-          </div>
-        </ThemeProvider>
+        <VersionProvider>
+          <ThemeProvider
+            disableTransitionOnChange
+            enableSystem
+            attribute="class"
+            defaultTheme="dark"
+          >
+            <div className="flex flex-col h-screen">
+              <Header />
+              {children}
+            </div>
+          </ThemeProvider>
+        </VersionProvider>
       </body>
     </html>
   )
