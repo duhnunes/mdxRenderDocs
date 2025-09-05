@@ -4,7 +4,7 @@ import { ModeToggle } from '../mode-toggle'
 import { Button } from '../ui/button'
 import { Logo } from '../ui/logo'
 import { Separator } from '../ui/separator'
-import { DropdownVersion } from '../Dropdown/versioning'
+import { DropdownVersion } from '../Dropdown/dropdown'
 
 export const Header = () => {
   return (
