@@ -77,17 +77,19 @@ export function DropdownVersion() {
     router.push(`/docs/${targetVersion}/${currentFilename}`)
   }
 
-  const getIcon = (label: string | undefined): JSX.Element | null => {
+  const getIconByLabel = (label: string): JSX.Element | null => {
     if (!versions || !label) return null
+
+    const normalizedLabel = label.toLowerCase().replace('version-', '')
+
     const all = [versions.canary, ...versions.active, ...versions.archived]
 
     const found = all.find((v) => {
-      const normalized =
-        v.label === 'canary' ? 'canary' : v.label.replace('version-', '')
-      return normalized === label
+      const vNormalized = v.label.toLowerCase().replace('version-', '')
+      return vNormalized === normalizedLabel
     })
 
-    const Icon = found ? iconMap[found.icon] : null
+    const Icon = found?.icon ? iconMap[found.icon] : null
     return Icon ? <Icon className="size-4 text-primary" /> : null
   }
 
@@ -114,9 +116,9 @@ export function DropdownVersion() {
           className="min-w-[134px] capitalize"
         >
           {version === 'canary'
-            ? 'Canary'
+            ? 'canary'
             : `Version ${version?.replace('version-', '')}`}
-          <DropdownMenuShortcut>{getIcon(version)}</DropdownMenuShortcut>
+          <DropdownMenuShortcut>{getIconByLabel(version)}</DropdownMenuShortcut>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
@@ -128,7 +130,7 @@ export function DropdownVersion() {
           >
             {versions.canary.label}
             <DropdownMenuShortcut>
-              {getIcon(versions.canary.label)}
+              {getIconByLabel(versions.canary.label)}
             </DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
@@ -141,7 +143,9 @@ export function DropdownVersion() {
               onClick={() => handleSelectVersion(label)}
             >
               {label.replace('version-', 'version ')}
-              <DropdownMenuShortcut>{getIcon(label)}</DropdownMenuShortcut>
+              <DropdownMenuShortcut>
+                {getIconByLabel(label)}
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
@@ -157,7 +161,9 @@ export function DropdownVersion() {
               onClick={() => handleSelectVersion(label)}
             >
               {label.replace('version-', 'version ')}
-              <DropdownMenuShortcut>{getIcon(label)}</DropdownMenuShortcut>
+              <DropdownMenuShortcut>
+                {getIconByLabel(label)}
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
