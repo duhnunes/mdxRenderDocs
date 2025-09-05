@@ -40,7 +40,11 @@ export function DropdownVersion() {
   useEffect(() => {
     const saved = localStorage.getItem('mdxRenderDoc-selectedVersion')
     const currentLabel = staticVersions[0]
-    setVersionSelected(saved || 'current' ? currentLabel : saved || 'Canary')
+    if (saved) {
+      setVersionSelected(saved)
+    } else {
+      setVersionSelected(currentLabel)
+    }
 
     const inferIcon = (label: string): keyof typeof iconMap => {
       const version = label.replace('version-', '')
