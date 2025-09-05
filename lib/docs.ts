@@ -14,16 +14,31 @@ export type DocCategory = {
   links: DocLink[]
 }
 
-const CONTENT_DIR = path.join(process.cwd(), 'app/docs')
+export function getAllDocs(version?: string): DocCategory[] {
+  const resolvedVersion = version || 'canary'
 
-export function getAllDocs(): DocCategory[] {
+  const basePath =
+    resolvedVersion === 'canary'
+      ? path.join(process.cwd(), 'app/docs')
+      : path.join(
+          process.cwd(),
+          'versioned',
+          `version-${resolvedVersion}`,
+          'docs'
+        )
+
+  if (!fs.existsSync(basePath)) {
+    console.warn(`⚠️ Pasta de documentação não encontrada: ${basePath}`)
+    return []
+  }
+
   const categories: (DocCategory & { position: number })[] = []
 
-  const entries = fs.readdirSync(CONTENT_DIR, { withFileTypes: true })
+  const entries = fs.readdirSync(basePath, { withFileTypes: true })
 
   entries.forEach((entry) => {
     if (entry.isDirectory()) {
-      const categoryPath = path.join(CONTENT_DIR, entry.name)
+      const categoryPath = path.join(basePath, entry.name)
       const categoryMetaPath = path.join(categoryPath, '_category.json')
 
       let categoryTitle = entry.name
@@ -49,11 +64,15 @@ export function getAllDocs(): DocCategory[] {
           const raw = fs.readFileSync(filePath, 'utf-8')
           const { data } = matter(raw)
 
-          const slug = `/${entry.name}/${file.replace('.mdx', '')}`
+          const filename = file.replace('.mdx', '')
+          const slug =
+            resolvedVersion === 'canary'
+              ? `/docs/canary/${filename}`
+              : `/docs/${resolvedVersion}/${filename}`
 
           return {
             href: slug,
-            label: data.title || file.replace('.mdx', ''),
+            label: data.title || filename,
             description: data.description || '',
             position: data.link_position ?? 1,
           }

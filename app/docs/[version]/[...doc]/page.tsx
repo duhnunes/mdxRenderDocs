@@ -8,13 +8,18 @@ import { getAllDocs } from '@/lib/docs'
 export default async function DocPage({
   params,
 }: {
-  params: Promise<{ doc: string[] }>
+  params: Promise<{ version: string; doc: string[] }>
 }) {
-  const { doc } = await params
-  const slug = `/${doc.join('/')}`
-  const { content } = await getDocContent(doc.join('/'))
+  const { version, doc } = await params
+  const filename = doc.at(-1)
+  if (!filename) {
+    throw new Error('Filename is undefined')
+  }
+  const slug = `/docs/${version}/${filename}`
 
-  const sidebarLinks = getAllDocs()
+  const { content } = await getDocContent(filename, version)
+
+  const sidebarLinks = getAllDocs(version)
   const flatLinks = sidebarLinks.flatMap((category) => category.links)
   const currentIndex = flatLinks.findIndex((link) => link.href === slug)
 

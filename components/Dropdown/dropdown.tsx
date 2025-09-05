@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type JSX } from 'react'
 import { Archive, Bird, PackageOpen, Spline } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 
 import {
   DropdownMenu,
@@ -31,6 +32,8 @@ export function DropdownVersion() {
   const [versionSelected, setVersionSelected] = useState<string | undefined>(
     undefined
   )
+  const router = useRouter()
+
   const [versions, setVersions] = useState<{
     canary: VersionMeta
     active: VersionMeta[]
@@ -65,13 +68,23 @@ export function DropdownVersion() {
     const archived = rest.filter((v) => v.icon === 'archive')
 
     setVersions({
-      canary: { label: 'Canay', icon: 'bird' },
+      canary: { label: 'canary', icon: 'bird' },
       active: [current, ...active],
       archived,
     })
   }, [])
 
-  const handleSelectVersion = (version: string) => {
+  function handleSelectVersion(version: string) {
+    const pathname = window.location.pathname
+    const match = pathname.match(/^\/docs\/([^\/]+)\/([^\/]+)$/)
+
+    const currentFilename = match?.[2] || 'intro' // fallback se não tiver
+    const targetVersion =
+      version === 'Canary' ? 'canary' : version.replace('version-', '')
+
+    const path = `/docs/${targetVersion}/${currentFilename}`
+
+    router.push(path)
     setVersionSelected(version)
     localStorage.setItem('mdxRenderDoc-selectedVersion', version)
   }
@@ -101,8 +114,8 @@ export function DropdownVersion() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="w-[134px]">
-          {versionSelected}
+        <Button variant="outline" size="sm" className="w-[134px] capitalize">
+          {versionSelected?.replace('version-', 'version ')}
           <DropdownMenuShortcut>
             {getIcon(versionSelected)}
           </DropdownMenuShortcut>
@@ -112,6 +125,7 @@ export function DropdownVersion() {
         <DropdownMenuGroup>
           <DropdownMenuItem
             onClick={() => handleSelectVersion(versions.canary.label)}
+            className="capitalize"
             aria-label="Version Canary"
           >
             {versions.canary.label}
@@ -125,9 +139,10 @@ export function DropdownVersion() {
           {versions.active.map(({ label }) => (
             <DropdownMenuItem
               key={label}
+              className="capitalize"
               onClick={() => handleSelectVersion(label)}
             >
-              {label}
+              {label.replace('version-', 'version ')}
               <DropdownMenuShortcut>{getIcon(label)}</DropdownMenuShortcut>
             </DropdownMenuItem>
           ))}
@@ -140,10 +155,10 @@ export function DropdownVersion() {
           {versions.archived.map(({ label }) => (
             <DropdownMenuItem
               key={label}
-              className="text-primary/60"
+              className="text-primary/60 capitalize"
               onClick={() => handleSelectVersion(label)}
             >
-              {label}
+              {label.replace('version-', 'version ')}
               <DropdownMenuShortcut>{getIcon(label)}</DropdownMenuShortcut>
             </DropdownMenuItem>
           ))}

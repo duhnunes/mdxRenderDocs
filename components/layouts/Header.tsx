@@ -1,4 +1,7 @@
 import { Github } from 'lucide-react'
+import Link from 'next/link'
+
+import { getAllDocs } from '@/lib/docs'
 
 import { ModeToggle } from '../mode-toggle'
 import { Button } from '../ui/button'
@@ -6,7 +9,7 @@ import { Logo } from '../ui/logo'
 import { Separator } from '../ui/separator'
 import { DropdownVersion } from '../Dropdown/dropdown'
 
-export const Header = () => {
+export async function Header() {
   return (
     <header className="w-full flex items-center justify-between px-6 py-2 border-b border-border">
       <Button size="icon" variant="ghost">
@@ -14,6 +17,9 @@ export const Header = () => {
       </Button>
       <div className="flex items-center gap-x-2 h-4">
         <DropdownVersion />
+        <Button variant="link" size="link" className="ml-2" asChild>
+          <Link href="/">Docs</Link>
+        </Button>
         <ModeToggle />
         <Separator orientation="vertical" />
         <Button asChild size="icon" title="GitHub" variant="ghost">
