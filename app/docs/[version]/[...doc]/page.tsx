@@ -4,6 +4,7 @@ import { getDocContent } from '@/lib/mdx'
 import { Main } from '@/components/layouts/Main'
 import { Button } from '@/components/ui/button'
 import { getAllDocs } from '@/lib/docs'
+import staticVersions from '@/versions.json'
 
 export default async function DocPage({
   params,
@@ -32,10 +33,36 @@ export default async function DocPage({
   const nextLink =
     currentIndex < flatLinks.length - 1 ? flatLinks[currentIndex + 1] : null
 
+  const currentVersion = staticVersions[0].replace('version-', '')
+  const isCanary = version === 'canary'
+  const isOutdated = version !== currentVersion && !isCanary
+
   return (
     <section className="w-full h-full overflow-y-auto px-7 flex flex-col gap-5 pb-8 md:py-8">
       <div className="w-full flex flex-col gap-5 md:mx-auto md:max-w-[860px] pt-14 md:pt-0">
-        <header className="mb-6">
+        <header className="mb-6 relative">
+          {isOutdated && (
+            <div className="bg-red-100 border border-red-500 text-red-700 px-4 py-2 rounded-sm text-sm flex items-center gap-2 absolute -top-6 right-0">
+              Essa é uma versão desatualizada da documentação.
+              <Link
+                href={`/docs/${currentVersion}`}
+                className="underline font-medium"
+              >
+                Voltar para versão atual.
+              </Link>
+            </div>
+          )}
+          {isCanary && (
+            <div className="bg-amber-100 border border-amber-700 text-amber-800 px-4 py-2 rounded-sm text-sm flex items-center gap-2 absolute -top-6 right-0">
+              Esta é uma versão ainda não lançada da documentação.
+              <Link
+                href={`/docs/${currentVersion}`}
+                className="underline font-medium"
+              >
+                Voltar para versão atual.
+              </Link>
+            </div>
+          )}
           <span className="text-xs text-zinc-700 font-semibold uppercase block -mb-0.5">
             {currentCategory?.title}
           </span>

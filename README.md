@@ -22,6 +22,8 @@
 
 O projeto nasceu como uma solução interna para documentar um outro projeto paralelo, mas evoluiu para algo maior: uma ferramenta que automatiza a renderização e roteamento de arquivos `.mdx` com React, oferecendo uma estrutura flexível e escalável para documentações técnicas.
 
+###### Inspirado em documentações como **tailwindcss** e **shadcnUi**
+
 A mágica acontece dentro da pasta `app/docs/`:
 
 - Cada pasta representa uma categoria

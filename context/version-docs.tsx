@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 import staticVersions from '@/versions.json'
 
@@ -16,6 +17,7 @@ export const VersionContext = createContext<VersionContextType | undefined>(
 export function VersionProvider({ children }: { children: React.ReactNode }) {
   const defaultVersion = staticVersions[0]?.replace('version-', '') || 'canary'
   const [version, setVersion] = useState(defaultVersion)
+  const pathname = usePathname()
 
   useEffect(() => {
     const saved = localStorage.getItem('mdxRenderDocs-selectedVersion')
@@ -29,6 +31,14 @@ export function VersionProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     localStorage.setItem('mdxRenderDocs-selectedVersion', version)
   }, [version])
+
+  useEffect(() => {
+    const match = pathname.match(/^\/docs\/([^\/]+)\/?.*$/)
+    const versionFromUrl = match?.[1]
+    if (versionFromUrl && versionFromUrl !== version) {
+      setVersion(versionFromUrl)
+    }
+  }, [pathname, version])
 
   return (
     <VersionContext.Provider value={{ version, setVersion }}>
