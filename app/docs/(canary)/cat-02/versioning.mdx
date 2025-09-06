@@ -1,0 +1,39 @@
+---
+title: Versionamento
+description: Sistema de versionamento é feito manualmente.
+link_position: 3
+---
+
+O sistema de versionamento do `mdxRenderDocs` permite manter múltiplas versões da documentação de forma organizada e acessível. O processo é **manual**, mas simples e flexível.
+
+## Estrutura de Versionamento
+
+Durante a build do site, o sistema verifica a pasta `app/docs/(versioned)/` e gera automaticamente um arquivo `versions.json` na raiz do projeto. Esse arquivo lista todas as versões disponíveis, da **mais recente para a mais antiga**.
+
+A versão com maior número (a mais recente) é considerada a versão "current" (atual).
+
+### Como criar uma nova versão
+
+1. Crie uma nova pasta dentro de `app/docs/(versioned)/` com o nome no formato:
+
+```bash
+version-<numero-da-versao>
+```
+
+2. Organize os arquivos da mesma forma como `app/docs/(canary)`
+- Cada subpasta dentro de `/version-<numb>/` representa uma **categoria**.
+- Cada arquivo `.mdx` dentro da categoria será uma **página acessível na sidebar**.
+
+## Exemplo de Estrutura
+
+```bash
+/(versioned)/
+└── version-2.0.0/
+    ├── introducao/
+        └── _category.json
+    │   └── boas-vindas.mdx
+    └── guia-avancado/
+        └── _category.json
+        └── versionamento.mdx
+```
+

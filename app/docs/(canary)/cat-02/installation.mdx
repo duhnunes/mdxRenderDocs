@@ -1,0 +1,26 @@
+---
+title: Instalação
+description: Modo de instalação
+link_position: 1
+---
+
+import { BlockExample } from './ui/block-example'
+import { Separator } from './ui/separator'
+
+Para começar a usar o mdxRenderDocs, instale as dependências principais:
+
+```Terminal
+gh repo clone duhnunes/mdxRenderDocs
+code mdxRenderDoc
+pnpm install
+pnpm run dev
+```
+
+<Separator className="my-4" />
+
+# Fluxo de pastas
+
+> Funcionamento principal está dentro de `app/docs/`
+
+- `(canary)` - Pasta onde você organiza suas categorias e conteúdos em desenvolvimento.
+- `(versioned)` - Pasta onde você organiza suas versões, atual e current.

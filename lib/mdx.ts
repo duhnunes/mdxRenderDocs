@@ -11,12 +11,11 @@ import staticVersions from '../versions.json'
 export async function getDocContent(filename: string, version?: string) {
   const basePath =
     version === 'canary'
-      ? path.join(process.cwd(), 'app/docs')
+      ? path.join(process.cwd(), 'app/docs/(canary)')
       : version
-        ? path.join(process.cwd(), 'versioned', `version-${version}`, 'docs')
-        : path.join(process.cwd(), 'versioned', staticVersions[0], 'docs')
+        ? path.join(process.cwd(), 'app/docs/(versioned)', `version-${version}`)
+        : path.join(process.cwd(), 'app/docs/(versioned)', staticVersions[0])
 
-  // 🔍 Busca recursiva pelo arquivo
   const findFile = (dir: string): string | null => {
     const entries = fs.readdirSync(dir, { withFileTypes: true })
 
@@ -39,7 +38,7 @@ export async function getDocContent(filename: string, version?: string) {
   const filePath = findFile(basePath)
 
   if (!filePath) {
-    console.log(`Arquivo MDX não encontrado: ${filename}`)
+    console.log(`MDX File not found: ${filename}`)
     notFound()
   }
 

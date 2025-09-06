@@ -21,16 +21,15 @@ export function getAllDocs(version?: string): DocCategory[] {
 
   const basePath =
     resolvedVersion === 'canary'
-      ? path.join(process.cwd(), 'app/docs')
+      ? path.join(process.cwd(), 'app/docs/(canary)')
       : path.join(
           process.cwd(),
-          'versioned',
-          `version-${resolvedVersion}`,
-          'docs'
+          'app/docs/(versioned)',
+          `version-${resolvedVersion}`
         )
 
   if (!fs.existsSync(basePath)) {
-    console.warn(`Pasta de documentação não encontrada: ${basePath}`)
+    console.warn(`Doc Folder not found: ${basePath}`)
     return []
   }
 
