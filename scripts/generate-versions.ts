@@ -1,8 +1,7 @@
-// scripts/generate-versions.ts
 import fs from 'fs'
 import path from 'node:path'
 
-const versionDir = path.join(process.cwd(), 'versioned')
+const versionDir = path.join(process.cwd(), 'app/docs/(versioned)')
 const outputPath = path.join(process.cwd(), 'versions.json')
 
 if (!fs.existsSync(versionDir)) {
@@ -18,6 +17,7 @@ const folders = fs.readdirSync(versionDir)
 
 const versions = folders
   .filter((folder) => folder.startsWith('version-'))
+  .map((folder) => folder.replace('version-', ''))
   .sort((a, b) =>
     b
       .replace('version-', '')
