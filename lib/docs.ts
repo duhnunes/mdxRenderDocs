@@ -21,7 +21,7 @@ export function getAllDocs(version?: string): DocCategory[] {
 
   const basePath =
     resolvedVersion === 'canary'
-      ? path.join(process.cwd(), 'app/docs')
+      ? path.join(process.cwd(), 'app/docs/(canary)')
       : path.join(
           process.cwd(),
           'app/docs/(versioned)',

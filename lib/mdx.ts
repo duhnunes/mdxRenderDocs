@@ -11,7 +11,7 @@ import staticVersions from '../versions.json'
 export async function getDocContent(filename: string, version?: string) {
   const basePath =
     version === 'canary'
-      ? path.join(process.cwd(), 'app/docs')
+      ? path.join(process.cwd(), 'app/docs/(canary)')
       : version
         ? path.join(process.cwd(), 'app/docs/(versioned)', `version-${version}`)
         : path.join(process.cwd(), 'app/docs/(versioned)', staticVersions[0])
