@@ -46,7 +46,7 @@ interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
-  active?: boolean // Nova prop
+  active?: boolean
 }
 
 function Button({

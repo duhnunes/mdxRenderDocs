@@ -43,7 +43,7 @@ export function DropdownVersion() {
   useEffect(() => {
     const inferIcon = (label: string): keyof typeof iconMap => {
       const version = label.replace('version-', '')
-      return version < '1.1.2' ? 'archive' : 'packageOpen'
+      return version <= '1.0.0' ? 'archive' : 'packageOpen'
     }
 
     const parsedVersions = (staticVersions as string[]).map(
@@ -90,7 +90,7 @@ export function DropdownVersion() {
     })
 
     const Icon = found?.icon ? iconMap[found.icon] : null
-    return Icon ? <Icon className="size-4 text-primary" /> : null
+    return Icon ? <Icon className="size-4" /> : null
   }
 
   if (!versions) {
@@ -107,6 +107,9 @@ export function DropdownVersion() {
     )
   }
 
+  const isCurrentVersion = (label: string) =>
+    label.replace('version-', '') === version
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -118,14 +121,30 @@ export function DropdownVersion() {
           {version === 'canary'
             ? 'canary'
             : `Version ${version?.replace('version-', '')}`}
-          <DropdownMenuShortcut>{getIconByLabel(version)}</DropdownMenuShortcut>
+          <DropdownMenuShortcut
+            className={
+              version === 'canary'
+                ? 'text-blue-500'
+                : versions?.archived.some(
+                      (v) => v.label.replace('version-', '') === version
+                    )
+                  ? 'text-red-500'
+                  : versions?.active.some(
+                        (v) => v.label.replace('version-', '') === version
+                      )
+                    ? 'text-primary'
+                    : ''
+            }
+          >
+            {getIconByLabel(version)}
+          </DropdownMenuShortcut>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
         <DropdownMenuGroup>
           <DropdownMenuItem
             onClick={() => handleSelectVersion(versions.canary.label)}
-            className="capitalize"
+            className={`capitalize ${isCurrentVersion(versions.canary.label) ? 'bg-accent/30 border-1 border-border' : ''}`}
             aria-label="Version Canary"
           >
             {versions.canary.label}
@@ -134,12 +153,14 @@ export function DropdownVersion() {
             </DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
+
         <DropdownMenuSeparator />
+
         <DropdownMenuGroup>
           {versions.active.map(({ label }) => (
             <DropdownMenuItem
               key={label}
-              className="capitalize"
+              className={`capitalize ${isCurrentVersion(label) ? 'bg-accent/30 border-1 border-border' : ''}`}
               onClick={() => handleSelectVersion(label)}
             >
               {label.replace('version-', 'version ')}
@@ -157,7 +178,7 @@ export function DropdownVersion() {
           {versions.archived.map(({ label }) => (
             <DropdownMenuItem
               key={label}
-              className="text-primary/60 capitalize"
+              className={`text-primary/60 capitalize ${isCurrentVersion(label) ? 'bg-red-800/5 border-1 border-red-600/20' : ''}`}
               onClick={() => handleSelectVersion(label)}
             >
               {label.replace('version-', 'version ')}

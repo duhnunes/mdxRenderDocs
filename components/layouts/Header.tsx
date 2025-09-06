@@ -22,9 +22,9 @@ export function Header() {
           <Logo className="size-5" />
         </Link>
       </Button>
-      <div className="flex items-center gap-x-2 h-4">
+      <div className="flex items-center md:gap-x-2 h-4">
         <DropdownVersion />
-        <Button variant="link" size="lg" asChild>
+        <Button variant="link" size="lg" asChild className="px-3 md:px-6">
           <Link href={href}>Docs</Link>
         </Button>
         <ModeToggle />
