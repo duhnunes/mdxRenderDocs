@@ -30,7 +30,7 @@ export function getAllDocs(version?: string): DocCategory[] {
         )
 
   if (!fs.existsSync(basePath)) {
-    console.warn(`Pasta de documentação não encontrada: ${basePath}`)
+    console.warn(`Doc Folder not found: ${basePath}`)
     return []
   }
 
