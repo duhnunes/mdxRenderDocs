@@ -14,7 +14,7 @@
 
 ## Demo
 
-[mdxRenderDocs](https://mdxrenderdocs.vercel.app/intro)
+[mdxRenderDocs](https://mdxrenderdocs.vercel.app/)
 
 ## About
 
@@ -22,7 +22,7 @@
 
 O projeto nasceu como uma solução interna para documentar um outro projeto paralelo, mas evoluiu para algo maior: uma ferramenta que automatiza a renderização e roteamento de arquivos `.mdx` com React, oferecendo uma estrutura flexível e escalável para documentações técnicas.
 
-###### Inspirado em documentações como **tailwindcss** e **shadcnUi**
+###### Inspirado em documentações como **tailwindcss** e **shadcn/ui**
 
 A mágica acontece dentro da pasta `app/docs/`:
 
@@ -40,6 +40,41 @@ A mágica acontece dentro da pasta `app/docs/`:
 - Sidebar automática com categorias organizadas
 - Dark mode com `next-themes`
 - Ordenação de links e categorias via frontmatter e `_category.json`
+- Versionamento de documentação com estrutura isolada por release
+
+## Estrutura de pastas
+> São 2 pastas principais para o funcionamento da documentação
+
+- `(canary)` - Pasta dedicada a versão em desenvolvimento da sua documentação
+- `(versioned)` - Pasta dedicada para o versionamento da sua documentação
+
+### **(canary)**  
+A estrutura das rotas do canary é baseada na organização de pastas e arquivos dentro de `app/docs/(canary)`:
+
+#### Categoria
+
+- Cada pasta vira uma categoria na sua sidebar e deve conter um arquivo `.mdx` dentro.
+- Cada pasta conta com um arquivo exclusivo `_category.json`, que serve como metadata dela
+
+```json
+{
+  "title": "Introdução",    // Nomeia a categoria
+  "sidebar_position": 1     // Posição na sidebar
+}
+```
+
+#### Link
+
+- Um arquivo `.mdx` dentro da categoria (pasta) vira um link na sua sidebar.
+- Cada arquivo conta com um `frontmatter`, que serve como metadata dele
+
+```md
+---
+title: Introdução         // Nomeia o link na sua sidebar
+description: Descrição    // Escreve uma descrição utilizada no componente <header> da página
+link_position: 1          // Posição na categoria
+---
+```
 
 ## Como usar
 
@@ -51,34 +86,6 @@ code mdxRenderDocs
 pnpm install
 pnpm run dev
 ```
-
-### Criação de rotas
-
-A estrutura de rotas é baseada na organização de arquivos dentro da pasta `app/docs`:
-
-- **Uma pasta** = uma categoria
-- **Um arquivo `.mdx`** = uma rota/página
-
-Cada arquivo `.mdx` deve conter um frontmatter no topo:
-
-```md
----
-title: Titulo no sidebar
-description: Descrição da página que aparece no componente antes do conteúdo do arquivo
-link_position: 1 (número do posicionamento)
----
-```
-
-Para personalizar uma categoria, adicione um arquivo `_category.json` dentro da pasta:
-
-```json
-{
-  "title": "Nome da Categoria", // Nome da categoria na sidebar
-  "sidebar_position": 2 // Posição da categoria na sidebar
-}
-```
-
-Com isso, você controla a ordem das categorias na sidebar e seus títulos de exibição.
 
 ---
 
