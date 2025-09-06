@@ -24,9 +24,8 @@ export function getAllDocs(version?: string): DocCategory[] {
       ? path.join(process.cwd(), 'app/docs')
       : path.join(
           process.cwd(),
-          'versioned',
-          `version-${resolvedVersion}`,
-          'docs'
+          'app/docs/(versioned)',
+          `version-${resolvedVersion}`
         )
 
   if (!fs.existsSync(basePath)) {
