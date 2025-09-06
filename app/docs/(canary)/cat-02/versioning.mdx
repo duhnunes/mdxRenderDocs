@@ -1,6 +1,6 @@
 ---
-title: Versionamento Manual
-description: Como criar versões da documentação usando o sistema manual
+title: Versionamento
+description: Sistema de versionamento é feito manualmente.
 link_position: 3
 ---
 
@@ -16,37 +16,24 @@ A versão com maior número (a mais recente) é considerada a versão "current" 
 
 1. Crie uma nova pasta dentro de `app/docs/(versioned)/` com o nome no formato:
 
-   ```bash
-   version-<numero-da-versao>
-   ```
-#### Exemplo
-
 ```bash
-/versioned/version-2.0.0/
+version-<numero-da-versao>
 ```
 
-2. Dentro dessa pasta, crie a estrutura:
-
-```bash
-/version-2.0.0/
-```
-
-3. Organize os arquivos da mesma forma como `app/docs/`
+2. Organize os arquivos da mesma forma como `app/docs/(canary)`
 - Cada subpasta dentro de `/version-<numb>/` representa uma **categoria**.
-- Cada arquivo `.mdx` dentro da categoria será uma **página acessível na sidebase**.
+- Cada arquivo `.mdx` dentro da categoria será uma **página acessível na sidebar**.
 
 ## Exemplo de Estrutura
 
 ```bash
-versioned/
-└── version-2.0/
+/(versioned)/
+└── version-2.0.0/
     ├── introducao/
+        └── _category.json
     │   └── boas-vindas.mdx
     └── guia-avancado/
+        └── _category.json
         └── versionamento.mdx
 ```
-
-## Fluxo
-
-Pegue sua documentação atual (canary) `app/docs/(canary)` (pastas como `[version]` e `(versioned)` são excluídas da leitura) e copie para dentro de `(versioned)/version-<x>/` para criar uma nova versão
 
