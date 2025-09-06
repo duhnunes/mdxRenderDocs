@@ -6,19 +6,40 @@ import { notFound } from 'next/navigation'
 
 import { mdxComponents } from '@/components/mdx-components'
 
-const CONTENT_PATH = path.join(process.cwd(), 'app', 'docs')
+import staticVersions from '../versions.json'
 
-export async function getDocContent(slug: string) {
-  const [category, filename] = slug.split('/')
+export async function getDocContent(filename: string, version?: string) {
+  const basePath =
+    version === 'canary'
+      ? path.join(process.cwd(), 'app/docs')
+      : version
+        ? path.join(process.cwd(), 'versioned', `version-${version}`, 'docs')
+        : path.join(process.cwd(), 'versioned', staticVersions[0], 'docs')
 
-  if (!category || !filename) {
-    console.log(`Slug acessado: ${slug}`)
-    notFound()
+  // 🔍 Busca recursiva pelo arquivo
+  const findFile = (dir: string): string | null => {
+    const entries = fs.readdirSync(dir, { withFileTypes: true })
+
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name)
+
+      if (entry.isDirectory()) {
+        const found = findFile(fullPath)
+        if (found) return found
+      }
+
+      if (entry.isFile() && entry.name === `${filename}.mdx`) {
+        return fullPath
+      }
+    }
+
+    return null
   }
 
-  const filePath = path.join(CONTENT_PATH, category, `${filename}.mdx`)
-  if (!fs.existsSync(filePath)) {
-    console.log(`Arquivo MDX não encontrado: ${filePath}`)
+  const filePath = findFile(basePath)
+
+  if (!filePath) {
+    console.log(`Arquivo MDX não encontrado: ${filename}`)
     notFound()
   }
 

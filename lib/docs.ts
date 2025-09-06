@@ -14,59 +14,86 @@ export type DocCategory = {
   links: DocLink[]
 }
 
-const CONTENT_DIR = path.join(process.cwd(), 'app/docs')
+const IGNORED_FOLDERS = ['[version]', '[...doc]', '_layout']
 
-export function getAllDocs(): DocCategory[] {
+export function getAllDocs(version?: string): DocCategory[] {
+  const resolvedVersion = version || 'canary'
+
+  const basePath =
+    resolvedVersion === 'canary'
+      ? path.join(process.cwd(), 'app/docs')
+      : path.join(
+          process.cwd(),
+          'versioned',
+          `version-${resolvedVersion}`,
+          'docs'
+        )
+
+  if (!fs.existsSync(basePath)) {
+    console.warn(`Pasta de documentação não encontrada: ${basePath}`)
+    return []
+  }
+
   const categories: (DocCategory & { position: number })[] = []
 
-  const entries = fs.readdirSync(CONTENT_DIR, { withFileTypes: true })
+  const entries = fs.readdirSync(basePath, { withFileTypes: true })
 
   entries.forEach((entry) => {
-    if (entry.isDirectory()) {
-      const categoryPath = path.join(CONTENT_DIR, entry.name)
-      const categoryMetaPath = path.join(categoryPath, '_category.json')
+    if (!entry.isDirectory()) return
+    if (IGNORED_FOLDERS.includes(entry.name)) return
 
-      let categoryTitle = entry.name
-      let categoryPosition = 999
+    const categoryPath = path.join(basePath, entry.name)
+    const hasMdxFile = fs
+      .readdirSync(categoryPath)
+      .some((file) => file.endsWith('.mdx'))
+    if (!hasMdxFile) return
 
-      if (fs.existsSync(categoryMetaPath)) {
-        try {
-          const rawMeta = fs.readFileSync(categoryMetaPath, 'utf-8')
-          const meta = JSON.parse(rawMeta)
-          categoryTitle = meta.title || categoryTitle
-          categoryPosition = meta.sidebar_position ?? categoryPosition
-        } catch (err) {
-          console.warn(`Erro ao ler _category.json em ${entry.name}:`, err)
-        }
+    const categoryMetaPath = path.join(categoryPath, '_category.json')
+
+    let categoryTitle = entry.name
+    let categoryPosition = 999
+
+    if (fs.existsSync(categoryMetaPath)) {
+      try {
+        const rawMeta = fs.readFileSync(categoryMetaPath, 'utf-8')
+        const meta = JSON.parse(rawMeta)
+        categoryTitle = meta.title || categoryTitle
+        categoryPosition = meta.sidebar_position ?? categoryPosition
+      } catch (err) {
+        console.warn(`Erro ao ler _category.json em ${entry.name}:`, err)
       }
-
-      const files = fs.readdirSync(categoryPath)
-
-      const links: DocLink[] = files
-        .filter((file) => file.endsWith('.mdx'))
-        .map((file) => {
-          const filePath = path.join(categoryPath, file)
-          const raw = fs.readFileSync(filePath, 'utf-8')
-          const { data } = matter(raw)
-
-          const slug = `/${entry.name}/${file.replace('.mdx', '')}`
-
-          return {
-            href: slug,
-            label: data.title || file.replace('.mdx', ''),
-            description: data.description || '',
-            position: data.link_position ?? 1,
-          }
-        })
-        .sort((a, b) => a.position - b.position)
-        .map(({ position: _position, ...link }) => link)
-
-      categories.push({
-        title: categoryTitle,
-        links,
-        position: categoryPosition,
-      })
     }
+
+    const files = fs.readdirSync(categoryPath)
+
+    const links: DocLink[] = files
+      .filter((file) => file.endsWith('.mdx'))
+      .map((file) => {
+        const filePath = path.join(categoryPath, file)
+        const raw = fs.readFileSync(filePath, 'utf-8')
+        const { data } = matter(raw)
+
+        const filename = file.replace('.mdx', '')
+        const slug =
+          resolvedVersion === 'canary'
+            ? `/docs/canary/${filename}`
+            : `/docs/${resolvedVersion}/${filename}`
+
+        return {
+          href: slug,
+          label: data.title || filename,
+          description: data.description || '',
+          position: data.link_position ?? 1,
+        }
+      })
+      .sort((a, b) => a.position - b.position)
+      .map(({ position: _position, ...link }) => link)
+
+    categories.push({
+      title: categoryTitle,
+      links,
+      position: categoryPosition,
+    })
   })
 
   return categories

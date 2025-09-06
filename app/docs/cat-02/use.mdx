@@ -22,13 +22,14 @@ Tá ligado?
 - Ordenando as categorias:
   Adicione um arquivo com nome `_category.json` dentro da pasta:
   ```json
-    {
-      "title": "Titulo da categoria",   // Título que aparece na sidebar
-      "sidebar_position": 1   // número da posição que você quer na ordem
-    }
+  {
+    "title": "Titulo da categoria", // Título que aparece na sidebar
+    "sidebar_position": 1 // número da posição que você quer na ordem
+  }
   ```
 
 ## Componentes MDX personalizados
+
 <Separator className="mb-8" />
 
 ```tsx
@@ -41,16 +42,18 @@ Tá ligado?
 
 ```tsx
 import { Separator } from './ui/separator'
-<Separator className="my-2" />
+;<Separator className="my-2" />
 ```
+
 <Separator className="my-2" />
 
 ---
 
 ## Componentes MDX
+
 <Separator className="mb-8" />
 
-```tsx
+````tsx
 # H1
 ## H2
 ### H3
@@ -61,16 +64,22 @@ import { Separator } from './ui/separator'
 bloco de código
 // ```    <- sem as barras
 
-```
+````
+
 # H1
+
 ## H2
+
 ### H3
+
 > Blockquote
-Lista:
+> Lista:
+
 - Item 1
 - Item 2
 - Item 3  
-`palavra destacada`
+  `palavra destacada`
+
 ```
 Bloco de código
 Com várias linhas

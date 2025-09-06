@@ -5,8 +5,7 @@ import './globals.css'
 
 import { Header } from '@/components/layouts/Header'
 import { ThemeProvider } from '@/components/theme-provider'
-import { Sidebar } from '@/components/layouts/Sidebar'
-import { getAllDocs } from '@/lib/docs'
+import { VersionProvider } from '@/context/version-docs'
 
 const bebas = Bebas_Neue({
   variable: '--font-bebas',
@@ -65,13 +64,11 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const categories = getAllDocs()
-
   return (
     <html suppressHydrationWarning lang="pt-BR">
       <head>
@@ -96,22 +93,19 @@ export default function RootLayout({
         <meta name="theme-color" content="#0a0a0a" />
       </head>
       <body className={`${bebas.variable} ${spaceMono.variable} antialiased`}>
-        <ThemeProvider
-          disableTransitionOnChange
-          enableSystem
-          attribute="class"
-          defaultTheme="dark"
-        >
-          <div className="flex flex-col h-screen">
-            <Header />
-            <div className="flex flex-1 overflow-hidden relative">
-              <Sidebar categories={categories} />
-              <div className="flex-1 h-full overflow-y-auto pt-12 md:pt-0">
-                {children}
-              </div>
+        <VersionProvider>
+          <ThemeProvider
+            disableTransitionOnChange
+            enableSystem
+            attribute="class"
+            defaultTheme="dark"
+          >
+            <div className="flex flex-col h-screen">
+              <Header />
+              {children}
             </div>
-          </div>
-        </ThemeProvider>
+          </ThemeProvider>
+        </VersionProvider>
       </body>
     </html>
   )
