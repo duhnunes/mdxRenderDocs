@@ -13,12 +13,7 @@ export async function getDocContent(filename: string, version?: string) {
     version === 'canary'
       ? path.join(process.cwd(), 'app/docs')
       : version
-        ? path.join(
-            process.cwd(),
-            'app/versioned',
-            `version-${version}`,
-            'docs'
-          )
+        ? path.join(process.cwd(), 'versioned', `version-${version}`, 'docs')
         : path.join(process.cwd(), 'versioned', staticVersions[0], 'docs')
 
   const findFile = (dir: string): string | null => {
